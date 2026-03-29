@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verity News - Admin Dashboard</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="admin-body">
+
+    <!-- Security Overlay -->
+    <div id="loginOverlay">
+        <div class="login-box">
+            <h2 style="color: var(--text-dark);">Verity Admin</h2>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">Use password: <strong>admin</strong></p>
+            <input type="password" id="passInput" class="auth-input" placeholder="Enter Password">
+            <button class="btn-primary" id="btnLogin" style="width: 100%;">Access Dashboard</button>
+            <p id="loginError" style="color: var(--danger); font-size: 0.85rem; margin-top: 10px; display: none;">Incorrect password.</p>
+        </div>
+    </div>
+
+    <!-- Admin Sidebar -->
+    <aside class="sidebar-admin">
+        <div class="brand"><i class="fa-solid fa-bolt"></i> VerityCMS</div>
+        <div class="nav-menu">
+            <div class="nav-item active" data-tab="post"><i class="fa-solid fa-pen-to-square"></i> Post Creator</div>
+            <div class="nav-item" data-tab="categories"><i class="fa-solid fa-list"></i> Categories</div>
+            <div class="nav-item" data-tab="ads"><i class="fa-solid fa-bullhorn"></i> Ad Manager</div>
+            <div class="nav-item" data-tab="seo"><i class="fa-solid fa-magnifying-glass-chart"></i> SEO Config</div>
+            <div class="nav-item" data-tab="users"><i class="fa-solid fa-users"></i> Registered Users</div>
+        </div>
+        <div class="logout" id="btnLogout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title" id="pageTitle" style="color:var(--text-main);">Post Creator</h1>
+            <a href="index.html" class="btn-return" target="_blank"><i class="fa-solid fa-external-link-alt"></i> View Live Site</a>
+        </div>
+
+        <!-- ================= TAB 1: POST CREATOR ================= -->
+        <div id="tab-post" class="tab-content active">
+            <div class="post-creator-wrapper">
+                <div class="card">
+                    <h3 style="color:var(--text-main);">Create New Article</h3>
+                    <div class="form-group">
+                        <label>Article Title</label>
+                        <input type="text" id="postTitle" class="form-control" placeholder="E.g. SpaceX launches...">
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select id="postCategory" class="form-control">
+                            <!-- Populated by JS -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Upload Cover Photo</label>
+                        <input type="file" id="postImageFile" class="form-control" accept="image/*">
+                        <input type="hidden" id="postImageBase64">
+                    </div>
+                    <div class="form-group">
+                        <label>Full Article Content</label>
+                        <!-- Form structure explicit textarea editor as per instructions -->
+                        <textarea id="postContent" class="form-control" placeholder="Write the full, detailed article here..." style="height: 200px;"></textarea>
+                    </div>
+                    <button class="btn-primary" id="btnPublish"><i class="fa-solid fa-paper-plane"></i> Publish to Site</button>
+                </div>
+
+                <div>
+                    <h4 style="margin-bottom: 15px; font-size: 0.9rem; color: var(--text-muted);">LIVE CARD PREVIEW</h4>
+                    <div class="preview-pane">
+                        <div class="mock-news-card">
+                            <img id="previewImg" src="https://images.unsplash.com/photo-1542204165-65bf26472b9b?w=600" alt="Preview">
+                            <div class="mock-content">
+                                <span class="mock-cat" id="previewCat">CATEGORY</span>
+                                <div class="mock-title" id="previewTitle">Your Article Title Will Appear Here</div>
+                                <div class="mock-desc" id="previewDesc">As you type, this card will dynamically update to reflect the first 100 characters of your article.</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card" style="margin-top: 30px;">
+                        <h4 style="color:var(--text-main);">Database Status</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 10px;">
+                            Currently hosting <strong id="postCountBadge" style="color: var(--primary);">0</strong> live articles.
+                        </p>
+                        <button id="btnClearDB" style="background: none; border: none; color: var(--danger); text-decoration: underline; cursor: pointer; margin-top: 15px; font-size: 0.85rem;">Clear Post Database</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TAB 2: CATEGORIES ================= -->
+        <div id="tab-categories" class="tab-content">
+            <div class="card" style="max-width: 600px;">
+                <h3 style="color:var(--text-main);">Manage Site Categories</h3>
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">These categories populate your live navigation menu and the post creator dropdown.</p>
+                
+                <ul id="adminCatList" class="cat-list">
+                    <!-- Populated by JS -->
+                </ul>
+                
+                <div style="display: flex; gap: 10px; margin-top: 15px;">
+                    <input type="text" id="newCatInput" class="form-control" placeholder="New category name">
+                    <button class="btn-primary" id="btnAddCat" style="width: 120px;"><i class="fa-solid fa-plus"></i> Add</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TAB 3: AD MANAGER ================= -->
+        <div id="tab-ads" class="tab-content">
+            <div class="card" style="max-width: 600px;">
+                <h3 style="color:var(--text-main);">Advertising Config</h3>
+                <div style="display: flex; align-items: center; padding: 20px; background: var(--bg-body); border: 1px solid var(--border-color); border-radius: 8px;">
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="adToggle">
+                        <span class="slider"></span>
+                    </label>
+                    <div style="color:var(--text-main);">
+                        <strong style="display: block; font-size: 1.1rem; margin-bottom: 3px;">Enable Live Ads</strong>
+                        <span style="font-size: 0.85rem; color: var(--text-muted);">Toggles visibility of 728x90 and 300x250 ad units site-wide.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TAB 4: SEO CONFIG ================= -->
+        <div id="tab-seo" class="tab-content">
+            <div class="card" style="max-width: 600px;">
+                <h3 style="color:var(--text-main);">SEO Configuration</h3>
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">Manage metadata for search engine indexing and social media OpenGraph previews.</p>
+                
+                <div class="form-group">
+                    <label>Site Title Tag</label>
+                    <input type="text" id="seoTitle" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Meta Description</label>
+                    <textarea id="seoDesc" class="form-control" style="height: 80px;"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Keywords</label>
+                    <input type="text" id="seoKeys" class="form-control" placeholder="News, Global, Current Events, Politics">
+                </div>
+                <button class="btn-primary" id="btnSaveSeo"><i class="fa-solid fa-floppy-disk"></i> Save SEO Settings</button>
+            </div>
+        </div>
+
+        <!-- ================= TAB 5: USERS ================= -->
+        <div id="tab-users" class="tab-content">
+            <div class="card">
+                <h3 style="color:var(--text-main);">System Users</h3>
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">Overview of all accounts registered securely through the frontend portal.</p>
+                
+                <table class="user-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email Address</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userTableBody">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+                <div id="userEmptyState" style="text-align:center; padding: 20px; color: var(--text-muted); display: none;">No users registered yet.</div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- App Scripts -->
+    <!-- app.js is not strictly required for logic since admin.js handles dashboard functions natively, but it initializes default db if missing. Let's rely directly on admin.js for speed/independence. -->
+    <script src="admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="meta-title">Verity News - Global News</title>
+    <meta name="description" content="Verity News brings you the latest global updates 24/7." id="meta-desc">
+    <meta name="keywords" content="News, Global" id="meta-keys">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- AUTH MODAL -->
+    <div class="auth-overlay" id="authOverlay">
+        <div class="auth-modal">
+            <i class="fa-solid fa-xmark auth-close" id="authCloseBtn"></i>
+            
+            <div class="auth-form active" id="formLogin">
+                <h2>Welcome Back</h2>
+                <input type="email" id="logEmail" class="auth-input" placeholder="Email Address">
+                <input type="password" id="logPass" class="auth-input" placeholder="Password">
+                <button class="auth-btn" id="btnLogSubmit">Sign In</button>
+                <div class="auth-switch" id="toRegister">Don't have an account? Sign Up</div>
+                <p id="logError" style="color:var(--accent-red); font-size:0.8rem; margin-top:10px; text-align:center; display:none;"></p>
+            </div>
+
+            <div class="auth-form" id="formRegister">
+                <h2>Create Account</h2>
+                <input type="text" id="regName" class="auth-input" placeholder="Full Name">
+                <input type="email" id="regEmail" class="auth-input" placeholder="Email Address">
+                <input type="password" id="regPass" class="auth-input" placeholder="Password">
+                <button class="auth-btn" id="btnRegSubmit">Register</button>
+                <div class="auth-switch" id="toLogin">Already have an account? Sign In</div>
+                <p id="regError" style="color:var(--accent-red); font-size:0.8rem; margin-top:10px; text-align:center; display:none;"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- HEADER & TOP BAR -->
+    <div class="top-bar">
+        <div class="breaking-badge">Breaking</div>
+        <div class="ticker-wrap"><div class="ticker-move" id="liveTicker">Loading breaking news...</div></div>
+        <div class="top-bar-right">
+            <span class="date-text" id="headerDate"></span>
+            <i class="fa-solid fa-moon theme-toggle" id="themeToggle"></i>
+        </div>
+    </div>
+
+    <header class="glass-header" id="mainHeader">
+        <div class="header-content">
+            <div class="logo"><a href="index.html"><h1>Verity<span>News</span></h1></a></div>
+            <div class="main-nav"><nav><ul id="dynamicNav"></ul></nav></div>
+            <div class="header-actions">
+                <div style="position: relative;">
+                    <i class="fa-solid fa-magnifying-glass search-icon" style="position: absolute; top:50%; transform:translateY(-50%); left:15px;"></i>
+                    <input type="text" id="searchInput" placeholder="Search news..." style="padding: 10px 15px 10px 40px; border-radius: 20px; border: 1px solid var(--border-color); background: var(--bg-body); color: var(--text-main); font-size: 0.9rem; outline: none; width: 220px; transition: 0.3s;" onfocus="this.style.borderColor='var(--accent-blue)'; this.style.boxShadow='var(--shadow-md)';" onblur="this.style.borderColor='var(--border-color)'; this.style.boxShadow='none';">
+                </div>
+                <!-- Dynamic Auth Buttons Handled Below -->
+                <button class="sign-in-btn" id="btnAuthOpen">Sign In</button>
+                
+                <!-- Dropped down User Profile Config -->
+                <div class="user-dropdown" id="userProfile" style="display:none;">
+                    <button class="sign-in-btn" id="btnUserMenu" style="border:none; display:flex; align-items:center; gap:8px; background:var(--bg-body); color:var(--text-main);">
+                        <i class="fa-regular fa-user"></i> <span id="authUserName">User</span> <i class="fa-solid fa-chevron-down" style="font-size:0.7rem;"></i>
+                    </button>
+                    <div id="userMenuContent" class="dropdown-menu">
+                        <a href="#"><i class="fa-solid fa-address-card" style="margin-right:8px; width:15px;"></i> Profile</a>
+                        <a href="#"><i class="fa-solid fa-bookmark" style="margin-right:8px; width:15px;"></i> My Saved</a>
+                        <a href="#" id="btnAuthLogout" style="color:var(--danger);"><i class="fa-solid fa-arrow-right-from-bracket" style="margin-right:8px; width:15px;"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="ad-slot header-ad toggleable-ad"><span>Google AdSense (728x90)</span></div>
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+        <main>
+            <div id="heroNewsContainer"></div>
+            <div class="section-title">Latest Headlines</div>
+            <div class="news-grid" id="gridNewsContainer"></div>
+        </main>
+
+        <aside>
+            <div class="ad-slot sidebar-ad toggleable-ad"><span>AdSense Slot (300x250)</span></div>
+            <div class="widget reveal">
+                <h4 class="w-title">Trending Topics</h4>
+                <ul>
+                    <li><a href="#">#GlobalElections2026</a></li>
+                    <li><a href="#">#TechInnovation</a></li>
+                    <li><a href="#">#MarketSurge</a></li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+
+    <footer class="site-footer">
+        &copy; 2026 Verity News. All rights reserved.
+        <a href="admin.html" class="admin-secret-link"><i class="fa-solid fa-lock"></i> Staff Login</a>
+    </footer>
+
+    <!-- Shared App Logic -->
+    <script src="app.js"></script>
+</body>
+</html>
